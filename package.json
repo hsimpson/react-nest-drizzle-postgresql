@@ -1,0 +1,20 @@
+{
+  "name": "react-trpc-nest-prisma-postgresql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Daniel Toplak <homer.simpson123@gmx.de>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "format:check": "prettier . --check",
+    "format:fix": "prettier . --write"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "eslint": "^9.25.1",
+    "prettier": "^3.5.3"
+  }
+}
