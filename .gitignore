@@ -1,6 +1,7 @@
 # dirs
-packages/backend/dist/
 
 # globs
 **/.DS_Store
 **/node_modules/
+
+#files

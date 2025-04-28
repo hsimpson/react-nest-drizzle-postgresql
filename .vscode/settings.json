@@ -29,6 +29,9 @@
     "source.organizeImports": "explicit"
   },
   "editor.formatOnSave": true,
+  "files.associations": {
+    "*.env.example": "env"
+  },
   "files.exclude": {
     "**/node_modules": true,
     "dist": true

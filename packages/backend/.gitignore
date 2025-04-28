@@ -1,0 +1,7 @@
+#dirs
+dist
+
+#globs
+
+#files
+.env
