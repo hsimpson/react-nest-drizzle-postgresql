@@ -1,1 +1,2 @@
 package.json
+drizzle/meta/**/*.json

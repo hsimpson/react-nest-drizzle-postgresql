@@ -5,3 +5,7 @@ export const account = pgTable('account', {
   public_id: uuid().defaultRandom().notNull().unique(),
   email: varchar({ length: 255 }).notNull().unique(),
 });
+
+export const databaseSchema = {
+  account,
+};

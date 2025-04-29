@@ -6,7 +6,7 @@ export class AccountController {
   public constructor(private readonly accountService: AccountService) {}
 
   @Get()
-  public getAccounts() {
+  public async getAccounts() {
     return this.accountService.findAll();
   }
 }
