@@ -8,6 +8,20 @@
       "when": 1745666824993,
       "tag": "0000_striped_dreadnoughts",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1745946365103,
+      "tag": "0001_broad_bulldozer",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1745946597238,
+      "tag": "0002_tan_norrin_radd",
+      "breakpoints": true
     }
   ]
 }
