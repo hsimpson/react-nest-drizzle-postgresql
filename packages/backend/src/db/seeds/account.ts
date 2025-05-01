@@ -1,6 +1,6 @@
-import { account } from '../schema';
+import { databaseSchema } from '../schema';
 
-type InsertAccount = typeof account.$inferInsert;
+type InsertAccount = typeof databaseSchema.account.$inferInsert;
 
 export const accountSeed: InsertAccount[] = [
   {

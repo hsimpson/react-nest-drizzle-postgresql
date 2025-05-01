@@ -1,12 +1,9 @@
-import { InferSelectModel } from 'drizzle-orm';
-import { databaseSchema } from 'src/db/schema';
+import { Expose } from 'class-transformer';
 
 export class AccountResponseDto {
+  @Expose()
   public public_id: string;
-  public email: string;
 
-  public constructor(account: InferSelectModel<typeof databaseSchema.account>) {
-    this.public_id = account.public_id;
-    this.email = account.email;
-  }
+  @Expose()
+  public email: string;
 }

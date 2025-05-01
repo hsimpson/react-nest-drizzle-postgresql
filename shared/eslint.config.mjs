@@ -9,6 +9,10 @@ export default tseslint.config(
   // ...tseslint.config.stylistic,
 
   {
+    ignores: ['./eslint.config.mjs', './prettier.config.mjs'],
+  },
+
+  {
     languageOptions: {
       parserOptions: {
         projectService: true,
