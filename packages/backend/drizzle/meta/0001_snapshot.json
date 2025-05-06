@@ -1,6 +1,6 @@
 {
-  "id": "6b3e9885-212d-4b50-b201-790385ec39da",
-  "prevId": "eaa11927-59e5-43ec-a2d4-a95cdc5bf681",
+  "id": "5032b4bf-c77c-4e0f-a7d6-bdc2ffd3b3a2",
+  "prevId": "03d91c74-7641-46bf-8f60-179a80b582b8",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -10,26 +10,9 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "account_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "public_id": {
-          "name": "public_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false,
           "default": "gen_random_uuid()"
         },
         "email": {
@@ -37,6 +20,26 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},

@@ -1,1 +1,0 @@
-ALTER TABLE "account" ADD COLUMN "public_id" uuid DEFAULT gen_random_uuid();

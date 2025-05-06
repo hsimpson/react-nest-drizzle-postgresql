@@ -8,7 +8,7 @@ import { DbConfigService } from './dbconfig.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     DrizzlePGModule.registerAsync({
       tag: 'DB',
       useClass: DbConfigService,

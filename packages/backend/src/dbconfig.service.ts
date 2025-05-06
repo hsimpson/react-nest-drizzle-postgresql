@@ -1,5 +1,5 @@
+import * as schema from '@/db/schema';
 import { Injectable } from '@nestjs/common';
-import { databaseSchema } from './db/schema';
 
 @Injectable()
 export class DbConfigService {
@@ -15,7 +15,7 @@ export class DbConfigService {
           connectionString,
         },
       },
-      config: { schema: databaseSchema },
+      config: { schema },
     };
   };
 }

@@ -1,9 +1,18 @@
+import * as schema from '@/db/schema';
 import { Expose } from 'class-transformer';
+import { InferSelectModel } from 'drizzle-orm';
 
-export class AccountResponseDto {
+type Account = InferSelectModel<typeof schema.account>;
+
+export class AccountResponseDto implements Account {
   @Expose()
-  public public_id: string;
+  public id: string;
 
   @Expose()
   public email: string;
+
+  // not exposed fields
+  public password: string;
+  public createdAt: Date;
+  public updatedAt: Date;
 }
