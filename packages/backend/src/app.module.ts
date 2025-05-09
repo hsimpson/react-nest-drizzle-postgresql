@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AccountModule } from './account/account.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { DbConfigService } from './dbconfig.service';
 
 @Module({
@@ -13,6 +14,7 @@ import { DbConfigService } from './dbconfig.service';
       tag: 'DB',
       useClass: DbConfigService,
     }),
+    AuthModule,
     AccountModule,
   ],
   controllers: [AppController],

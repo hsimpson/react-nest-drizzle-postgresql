@@ -4,11 +4,13 @@ This is a full-stack application built with React, tRPC, NestJS, Drizzle ORM, an
 
 ## Features
 
-- **Database**: PostgreSQL for data storage.
-- **ORM**: Drizzle ORM for database interactions.
-- **Backend**: NestJS for building the server-side application.
-- **Frontend**: React for building the client-side application.
-- **Type Safety**: End-to-end type safety with tRPC and TypeScript.
+### Database: PostgreSQL for data storage
+
+### ORM: Drizzle ORM for database interactions
+
+### Backend: NestJS for building the server-side application
+
+### Frontend: React for building the client-side application
 
 ## Installation
 

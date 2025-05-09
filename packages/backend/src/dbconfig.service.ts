@@ -6,6 +6,7 @@ export class DbConfigService {
   // private readonly logger = new Logger(DbConfigService.name);
 
   public create = () => {
+    // TODO: use ConfigService to get the connection string
     const connectionString = process.env.DATABASE_URL;
 
     return {

@@ -1,8 +1,16 @@
-import { ClassSerializerInterceptor, INestApplication } from '@nestjs/common';
+import { ClassSerializerInterceptor, INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 function registerGlobals(app: INestApplication) {
+  app.useGlobalPipes(
+    new ValidationPipe({
+      // TODO: disable error messages in production
+      disableErrorMessages: false,
+      whitelist: true,
+    }),
+  );
+
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector), {
       strategy: 'excludeAll',
