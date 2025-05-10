@@ -5,11 +5,12 @@ import { AccountModule } from './account/account.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { DbConfigService } from './dbconfig.service';
+import { loadConfig } from './config/config';
+import { DbConfigService } from './config/dbconfig.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, expandVariables: true, load: [loadConfig] }),
     DrizzlePGModule.registerAsync({
       tag: 'DB',
       useClass: DbConfigService,
