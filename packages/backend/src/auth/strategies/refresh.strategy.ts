@@ -5,10 +5,10 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtConfig } from '../../config/config';
 import { AuthJwtPayload } from '../types/auth-jwt-payload';
 
-const JWT_STRATEGY_NAME = 'jwt';
+const JWT_STRATEGY_NAME = 'refresh-jwt';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY_NAME) {
+export class RefreshJwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY_NAME) {
   public static readonly StrategyName = JWT_STRATEGY_NAME;
 
   public constructor(private readonly configService: ConfigService) {
@@ -21,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY_NAME) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: jwtConfig.accessSecret,
+      secretOrKey: jwtConfig.refreshSecret,
     });
   }
 

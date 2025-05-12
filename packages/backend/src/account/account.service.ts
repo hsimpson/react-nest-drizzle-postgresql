@@ -11,6 +11,10 @@ export class AccountService {
     return await this.db.query.account.findMany();
   }
 
+  public async findById(id: string) {
+    return await this.db.query.account.findFirst({ where: (account) => eq(account.id, id) });
+  }
+
   public async findByEmail(email: string) {
     return await this.db.query.account.findFirst({ where: (account) => eq(account.email, email) });
   }
