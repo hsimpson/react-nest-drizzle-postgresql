@@ -1,5 +1,5 @@
 {
-  "name": "react-trpc-nest-prisma-postgresql",
+  "name": "react-nest-prisma-postgresql",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Daniel Toplak <homer.simpson123@gmx.de>",

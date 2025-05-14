@@ -1,6 +1,6 @@
-# react-trpc-nest-drizzle-postgresql
+# react-nest-drizzle-postgresql
 
-This is a full-stack application built with React, tRPC, NestJS, Drizzle ORM, and PostgreSQL. It serves as a boilerplate for building modern web applications with a focus on type safety and developer experience.
+This is a full-stack application built with React, NestJS, Drizzle ORM, and PostgreSQL. It serves as a boilerplate for building modern web applications with a focus on type safety and developer experience.
 
 ## Features
 
