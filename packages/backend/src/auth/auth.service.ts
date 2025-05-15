@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 import { JwtConfig } from 'src/config/config';
 import { AccountService } from '../account/account.service';
-import { AuthJwtPayload } from './types/auth-jwt-payload';
+import { AuthJwtPayload, ExpressRequestUser, JwtTokens } from './types/types';
 
 @Injectable()
 export class AuthService {
@@ -19,34 +19,46 @@ export class AuthService {
     this.jwtConfig = this.configService.get<JwtConfig>('jwt');
   }
 
-  public async validateUser(email: string, password: string) {
+  public async validateAccount(email: string, password: string): Promise<ExpressRequestUser | null> {
     const account = await this.accountService.findByEmail(email);
 
     if (!account || !(await argon2.verify(account.password, password))) {
       return null;
     }
 
-    return this.getTokens(account);
+    return { accountId: account.id };
   }
 
-  public async refreshToken(userId: string) {
-    const account = await this.accountService.findById(userId);
+  public async login(accountId: string): Promise<JwtTokens | null> {
+    const account = await this.accountService.findById(accountId);
+    if (!account) {
+      return null;
+    }
+
+    return this.generateTokens(account);
+  }
+
+  public async refreshToken(accountId: string) {
+    const account = await this.accountService.findById(accountId);
 
     if (!account) {
       return null;
     }
 
-    return this.getTokens(account);
+    return this.generateTokens(account);
   }
 
-  private async getTokens(account: typeof schema.account.$inferSelect) {
+  private async generateTokens(account: typeof schema.account.$inferSelect) {
     const payload: AuthJwtPayload = { sub: account.id, email: account.email };
 
-    const accessToken = await this.jwtService.signAsync(payload);
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: this.jwtConfig?.refreshSecret,
-      expiresIn: this.jwtConfig?.refreshExpiresIn,
-    });
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(payload),
+
+      this.jwtService.signAsync(payload, {
+        secret: this.jwtConfig?.refreshSecret,
+        expiresIn: this.jwtConfig?.refreshExpiresIn,
+      }),
+    ]);
 
     return { accessToken, refreshToken };
   }

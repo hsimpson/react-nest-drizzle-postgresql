@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { LoginResponseDto } from './dto/login.response.dto';
 import { LocalGuard } from './guards/local.guard';
 import { RefreshAuthGuard } from './guards/refresh.guard';
-import { AuthJwtPayload } from './types/auth-jwt-payload';
+import { AuthJwtPayload, ExpressRequestUser } from './types/types';
 
 @Controller('auth')
 export class AuthController {
@@ -13,8 +13,14 @@ export class AuthController {
 
   @Post('login')
   @UseGuards(LocalGuard)
-  public login(@Req() req: Request) {
-    return plainToInstance(LoginResponseDto, req.user);
+  public async login(@Req() req: Request) {
+    const reqUser = req.user as ExpressRequestUser;
+    const responseUser = await this.authService.login(reqUser.accountId);
+    if (!responseUser) {
+      throw new UnauthorizedException();
+    }
+
+    return plainToInstance(LoginResponseDto, responseUser);
   }
 
   @Post('refresh')
