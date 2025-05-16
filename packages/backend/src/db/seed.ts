@@ -8,7 +8,8 @@ import * as seeds from './seeds';
 async function main() {
   dotenv.config(); // Load environment variables from .env file
 
-  const db = drizzle(resolveDatabaseUrl());
+  // use snake_case for the database columns
+  const db = drizzle({ connection: resolveDatabaseUrl(), casing: 'snake_case' });
 
   await reset(db, schema);
   await seeds.account(db);

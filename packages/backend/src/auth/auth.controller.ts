@@ -3,6 +3,7 @@ import { plainToInstance } from 'class-transformer';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { LoginResponseDto } from './dto/login.response.dto';
+import { JwtAuthGuard } from './guards/jwt.guard';
 import { LocalGuard } from './guards/local.guard';
 import { RefreshAuthGuard } from './guards/refresh.guard';
 import { AuthJwtPayload, ExpressRequestUser } from './types/types';
@@ -33,5 +34,13 @@ export class AuthController {
     }
 
     return plainToInstance(LoginResponseDto, refresh);
+  }
+
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  public async logout(@Req() req: Request) {
+    const user = req.user as AuthJwtPayload;
+    // FIXME; only logout all sessions is available now
+    await this.authService.logoutAll(user.sub);
   }
 }

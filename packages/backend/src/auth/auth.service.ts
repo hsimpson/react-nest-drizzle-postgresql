@@ -35,7 +35,10 @@ export class AuthService {
       return null;
     }
 
-    return this.generateTokens(account);
+    const { accessToken, refreshToken } = await this.generateTokens(account);
+    await this.saveRefreshToken(accountId, refreshToken);
+
+    return { accessToken, refreshToken };
   }
 
   public async refreshToken(accountId: string) {
@@ -45,7 +48,31 @@ export class AuthService {
       return null;
     }
 
-    return this.generateTokens(account);
+    const { accessToken, refreshToken } = await this.generateTokens(account);
+    await this.saveRefreshToken(accountId, refreshToken);
+
+    return { accessToken, refreshToken };
+  }
+
+  public async validateRefreshToken(accountId: string, refreshToken: string) {
+    const sessions = await this.accountService.findSessions(accountId);
+
+    for (const session of sessions) {
+      if (await argon2.verify(session.hashedRefreshToken, refreshToken)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public async logoutAll(accountId: string) {
+    await this.accountService.deleteSessions(accountId);
+  }
+
+  private async saveRefreshToken(accountId: string, refreshToken: string) {
+    const hashedRefreshToken = await argon2.hash(refreshToken);
+    await this.accountService.createSession(accountId, hashedRefreshToken);
   }
 
   private async generateTokens(account: typeof schema.account.$inferSelect) {

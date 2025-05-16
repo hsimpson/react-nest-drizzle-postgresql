@@ -9,4 +9,6 @@ export default defineConfig({
   dbCredentials: {
     url: resolveDatabaseUrl(),
   },
+  // use snake_case for the database columns
+  casing: 'snake_case',
 });

@@ -1,5 +1,7 @@
+import { relations } from 'drizzle-orm';
 import { pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import { timestamps } from './columns.helpers';
+import refresh from './refresh';
 
 const account = pgTable('account', {
   id: uuid().primaryKey().defaultRandom(),
@@ -8,5 +10,9 @@ const account = pgTable('account', {
 
   ...timestamps,
 });
+
+export const accountRelations = relations(account, ({ many }) => ({
+  refreshes: many(refresh),
+}));
 
 export default account;

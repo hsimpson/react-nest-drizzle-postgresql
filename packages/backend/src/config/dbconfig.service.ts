@@ -26,7 +26,8 @@ export class DbConfigService implements ConfigurableModuleOptionsFactory<Drizzle
           database: dbConfig.name,
         },
       },
-      config: { schema },
+      // use snake_case for the database columns
+      config: { schema, casing: 'snake_case' },
     };
   };
 }
