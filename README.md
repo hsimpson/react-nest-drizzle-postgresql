@@ -19,3 +19,18 @@ Prerequisites:
 - Node.js (v22 or later)
 - Docker (for PostgreSQL)
 - Yarn (for package management)
+
+### Install the packages with Yarn
+
+```shell
+yarn install
+```
+
+### Create an environment for the backend
+
+Copy the `.env.example` file to `.env` and update the values as needed.
+To create the JWT secrets run the following command:
+
+```shell
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```

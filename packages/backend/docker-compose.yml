@@ -3,8 +3,8 @@ services:
   db:
     image: postgres:latest
     ports:
-      - '5432:5432'
+      - '${DATABASE_PORT}:${DATABASE_PORT}'
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: tasks
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
