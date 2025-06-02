@@ -1,38 +1,35 @@
-import * as schema from '@/db/schema';
-import { Inject, Injectable } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
-import { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import { Injectable } from '@nestjs/common';
+import { RefreshRepository } from 'src/refresh/refresh.repository';
+import { AccountRepository } from './account.repository';
 
 @Injectable()
 export class AccountService {
-  public constructor(@Inject('DB') private readonly db: NodePgDatabase<typeof schema>) {}
+  public constructor(
+    private readonly accountRepository: AccountRepository,
+    private readonly refreshRepository: RefreshRepository,
+  ) {}
 
-  public async findAll() {
-    return await this.db.select().from(schema.account);
+  public async getAllAccounts() {
+    return await this.accountRepository.getAll();
   }
 
-  public async findById(accountId: string) {
-    return await this.db.query.account.findFirst({ where: (account) => eq(account.id, accountId) });
+  public async getAccountById(accountId: string) {
+    return await this.accountRepository.getById(accountId);
   }
 
-  public async findByEmail(email: string) {
-    return await this.db.query.account.findFirst({ where: (account) => eq(account.email, email) });
+  public async getAccountByEmail(email: string) {
+    return await this.accountRepository.getByEmail(email);
   }
 
   public async createSession(accountId: string, hashedRefreshToken: string) {
-    await this.db.insert(schema.refresh).values({ accountId, hashedRefreshToken }).onConflictDoUpdate({
-      target: schema.refresh.id,
-      set: {
-        hashedRefreshToken,
-      },
-    });
+    await this.refreshRepository.createSession(accountId, hashedRefreshToken);
   }
 
   public async findSessions(accountId: string) {
-    return await this.db.select().from(schema.refresh).where(eq(schema.refresh.accountId, accountId));
+    return await this.refreshRepository.findSessions(accountId);
   }
 
   public async deleteSessions(accountId: string) {
-    await this.db.delete(schema.refresh).where(eq(schema.refresh.accountId, accountId));
+    await this.refreshRepository.deleteSessions(accountId);
   }
 }

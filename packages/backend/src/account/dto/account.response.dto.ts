@@ -1,8 +1,5 @@
-import * as schema from '@/db/schema';
+import { Account } from '@/db/schema';
 import { Expose } from 'class-transformer';
-import { InferSelectModel } from 'drizzle-orm';
-
-type Account = InferSelectModel<typeof schema.account>;
 
 export class AccountResponseDto implements Account {
   @Expose()

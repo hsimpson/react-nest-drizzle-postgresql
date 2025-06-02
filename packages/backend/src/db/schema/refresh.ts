@@ -20,4 +20,6 @@ export const refreshRelations = relations(refresh, ({ one }) => ({
   }),
 }));
 
+export type Refresh = typeof refresh.$inferSelect;
+
 export default refresh;

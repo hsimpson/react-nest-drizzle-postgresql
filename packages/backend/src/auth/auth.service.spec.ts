@@ -41,7 +41,7 @@ describe('AuthService', () => {
     // given
     const email = 'user@example.com';
     const password = 'password';
-    mockAccountService.findByEmail.mockResolvedValue({
+    mockAccountService.getAccountByEmail.mockResolvedValue({
       id: '1',
       email,
       password: await argon2.hash(password),
@@ -53,7 +53,7 @@ describe('AuthService', () => {
     const user = await authService.validateAccount(email, password);
 
     // then
-    expect(mockAccountService.findByEmail).toHaveBeenCalledWith(email);
+    expect(mockAccountService.getAccountByEmail).toHaveBeenCalledWith(email);
     expect(user).not.toBeNull();
     expect(user).toEqual({ accountId: '1' });
   });
@@ -62,7 +62,7 @@ describe('AuthService', () => {
     // given
     const email = 'user@example.com';
     const password = 'password';
-    mockAccountService.findByEmail.mockResolvedValue(undefined);
+    mockAccountService.getAccountByEmail.mockResolvedValue(undefined);
 
     // when
     const user = await authService.validateAccount(email, password);
@@ -75,7 +75,7 @@ describe('AuthService', () => {
     // given
     const email = 'user@example.com';
     const password = 'password';
-    mockAccountService.findByEmail.mockResolvedValue({
+    mockAccountService.getAccountByEmail.mockResolvedValue({
       id: '1',
       email,
       password: await argon2.hash('wrongPassword'),

@@ -11,7 +11,7 @@ export class AccountController {
 
   @Get()
   public async getAccounts(): Promise<AccountResponseDto[]> {
-    const accounts = await this.accountService.findAll();
+    const accounts = await this.accountService.getAllAccounts();
     return plainToInstance(AccountResponseDto, accounts);
   }
 }

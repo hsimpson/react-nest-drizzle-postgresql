@@ -15,4 +15,6 @@ export const accountRelations = relations(account, ({ many }) => ({
   refreshes: many(refresh),
 }));
 
+export type Account = typeof account.$inferSelect;
+
 export default account;

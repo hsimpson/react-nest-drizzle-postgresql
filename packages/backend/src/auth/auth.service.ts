@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   public async validateAccount(email: string, password: string): Promise<ExpressRequestUser | null> {
-    const account = await this.accountService.findByEmail(email);
+    const account = await this.accountService.getAccountByEmail(email);
 
     if (!account || !(await argon2.verify(account.password, password))) {
       return null;
@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   public async login(accountId: string): Promise<JwtTokens | null> {
-    const account = await this.accountService.findById(accountId);
+    const account = await this.accountService.getAccountById(accountId);
     if (!account) {
       return null;
     }
@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   public async refreshToken(accountId: string) {
-    const account = await this.accountService.findById(accountId);
+    const account = await this.accountService.getAccountById(accountId);
 
     if (!account) {
       return null;
