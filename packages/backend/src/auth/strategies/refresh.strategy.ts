@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
@@ -35,11 +35,11 @@ export class RefreshJwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY_
     const refreshToken = req.get('authorization')?.replace('Bearer', '').trim();
 
     if (!refreshToken) {
-      throw new UnauthorizedException();
+      return null;
     }
 
     if (!(await this.authService.validateRefreshToken(payload.sub, refreshToken))) {
-      throw new UnauthorizedException();
+      return null;
     }
 
     return payload;

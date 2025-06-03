@@ -11,7 +11,7 @@ const JWT_STRATEGY_NAME = 'jwt';
 export class JwtStrategy extends PassportStrategy(Strategy, JWT_STRATEGY_NAME) {
   public static readonly StrategyName = JWT_STRATEGY_NAME;
 
-  public constructor(private readonly configService: ConfigService) {
+  public constructor(configService: ConfigService) {
     const jwtConfig = configService.get<JwtConfig>('jwt');
 
     if (!jwtConfig) {

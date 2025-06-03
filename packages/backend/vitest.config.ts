@@ -7,14 +7,7 @@ export default defineConfig({
     environment: 'node',
     coverage: {
       provider: 'v8',
-      exclude: [
-        './drizzle.config.ts',
-        './src/**/*.dto.ts',
-        './src/auth/guards',
-        './src/auth/types',
-        './src/db/',
-        ...coverageConfigDefaults.exclude,
-      ],
+      exclude: ['./drizzle.config.ts', './src/auth/types', './src/db/', ...coverageConfigDefaults.exclude],
     },
   },
 
