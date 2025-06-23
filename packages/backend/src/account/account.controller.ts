@@ -1,6 +1,8 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { Request } from 'express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { ExpressRequestUser } from 'src/auth/types/types';
 import { AccountService } from './account.service';
 import { AccountResponseDto } from './dto/account.response.dto';
 
@@ -9,9 +11,10 @@ import { AccountResponseDto } from './dto/account.response.dto';
 export class AccountController {
   public constructor(private readonly accountService: AccountService) {}
 
-  @Get()
-  public async getAccounts(): Promise<AccountResponseDto[]> {
-    const accounts = await this.accountService.getAllAccounts();
+  @Get('me')
+  public async getMe(@Req() req: Request): Promise<AccountResponseDto> {
+    const reqUser = req.user as ExpressRequestUser;
+    const accounts = await this.accountService.getAccountById(reqUser.accountId);
     return plainToInstance(AccountResponseDto, accounts);
   }
 }

@@ -7,6 +7,8 @@ const account = pgTable('account', {
   id: uuid().primaryKey().defaultRandom(),
   email: varchar({ length: 255 }).notNull().unique(),
   password: varchar({ length: 255 }).notNull(),
+  firstName: varchar({ length: 255 }).notNull(),
+  lastName: varchar({ length: 255 }).notNull(),
 
   ...timestamps,
 });

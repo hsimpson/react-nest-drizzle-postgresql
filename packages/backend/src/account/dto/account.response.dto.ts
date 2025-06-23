@@ -8,6 +8,12 @@ export class AccountResponseDto implements Account {
   @Expose()
   public email: string;
 
+  @Expose()
+  public firstName: string;
+
+  @Expose()
+  public lastName: string;
+
   // not exposed fields
   public password: string;
   public createdAt: Date;
