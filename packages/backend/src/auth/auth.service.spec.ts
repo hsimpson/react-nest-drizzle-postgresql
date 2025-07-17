@@ -1,6 +1,7 @@
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 
+import { Account } from '@/db/schema';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import * as argon2 from 'argon2';
@@ -8,7 +9,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 import { AccountService } from '../account/account.service';
 
-describe('AuthService', () => {
+describe('AuthService', async () => {
   let authService: AuthService;
 
   const mockAccountService = mock<AccountService>();
@@ -38,6 +39,16 @@ describe('AuthService', () => {
     vi.resetAllMocks();
   });
 
+  const mockAccount: Account = {
+    id: '1',
+    email: 'user@example.com',
+    password: await argon2.hash('password'),
+    firstName: 'John',
+    lastName: 'Doe',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
   it('should be created', () => {
     expect(authService).toBeDefined();
     expect(mockConfigService.get).toHaveBeenCalledWith('jwt');
@@ -47,13 +58,7 @@ describe('AuthService', () => {
     // given
     const email = 'user@example.com';
     const password = 'password';
-    mockAccountService.getAccountByEmail.mockResolvedValue({
-      id: '1',
-      email,
-      password: await argon2.hash(password),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    mockAccountService.getAccountByEmail.mockResolvedValue({ ...mockAccount });
 
     // when
     const user = await authService.validateAccount(email, password);
@@ -82,11 +87,8 @@ describe('AuthService', () => {
     const email = 'user@example.com';
     const password = 'password';
     mockAccountService.getAccountByEmail.mockResolvedValue({
-      id: '1',
-      email,
+      ...mockAccount,
       password: await argon2.hash('wrongPassword'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     // when
@@ -98,13 +100,7 @@ describe('AuthService', () => {
 
   it('login_successful', async () => {
     // given
-    mockAccountService.getAccountById.mockResolvedValue({
-      id: '1',
-      email: 'user@example.com',
-      password: await argon2.hash('password'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    mockAccountService.getAccountById.mockResolvedValue({ ...mockAccount });
 
     // when
     const tokens = await authService.login('1');
@@ -127,13 +123,7 @@ describe('AuthService', () => {
 
   it('refreshToken_successful', async () => {
     // given
-    mockAccountService.getAccountById.mockResolvedValue({
-      id: '1',
-      email: 'user@example.com',
-      password: await argon2.hash('password'),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    mockAccountService.getAccountById.mockResolvedValue({ ...mockAccount });
 
     // when
     const tokens = await authService.refreshToken('1');

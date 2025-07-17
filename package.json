@@ -6,7 +6,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    
+    "format:check": "yarn workspaces run format:check",
+    "format:fix": "yarn workspaces run format:fix",
+    "lint:fix": "yarn workspaces run lint:fix",
+    "lint": "yarn workspaces run lint"
   },
   "workspaces": [
     "packages/*"
