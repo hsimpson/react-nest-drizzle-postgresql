@@ -11,5 +11,7 @@ export default defineConfig({
     },
   },
 
-  plugins: [swc.vite(), tsconfigPaths()],
+  //FIXME: This is a workaround for the issue with swc and tsconfig paths. Due to incompatibility between swc and vite-tsconfig-paths, we need to use both plugins.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  plugins: [swc.vite() as any, tsconfigPaths() as any],
 });
