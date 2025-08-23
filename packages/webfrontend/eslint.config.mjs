@@ -7,7 +7,14 @@ export default defineConfig([
   ...sharedConfig,
 
   {
-    ignores: ['./coverage/**/*', './dist/**/*', './eslint.config.mjs', './prettier.config.mjs', 'vite.config.mjs'],
+    ignores: [
+      './coverage/**/*',
+      './dist/**/*',
+      './eslint.config.mjs',
+      './prettier.config.mjs',
+      'tailwind.config.js',
+      'vite.config.mjs',
+    ],
   },
 
   // typescript-eslint rules

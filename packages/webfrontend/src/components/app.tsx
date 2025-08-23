@@ -1,10 +1,12 @@
 import React from 'react';
+import AuthProvider from '../provider/authProvider';
+import Routes from '../routes';
 
 const App = () => {
   return (
-    <div className="p-4">
-      <h1>Hello, React!</h1>
-    </div>
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
   );
 };
 
