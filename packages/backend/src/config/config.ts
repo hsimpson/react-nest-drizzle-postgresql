@@ -1,3 +1,5 @@
+import type { JwtSignOptions } from '@nestjs/jwt';
+
 export interface DatabaseConfig {
   user: string;
   password: string;
@@ -6,17 +8,32 @@ export interface DatabaseConfig {
   name: string;
 }
 
+export type JwtExpiration = NonNullable<JwtSignOptions['expiresIn']>;
+
 export interface JwtConfig {
   accessSecret: string;
-  accessExpiresIn: string;
+  accessExpiresIn: JwtExpiration;
   refreshSecret: string;
-  refreshExpiresIn: string;
+  refreshExpiresIn: JwtExpiration;
 }
 
 export interface Config {
   port: number;
   database: DatabaseConfig;
   jwt: JwtConfig;
+}
+
+function parseJwtExpiration(value: string | undefined, fallback: JwtExpiration): JwtExpiration {
+  if (!value?.trim()) {
+    return fallback;
+  }
+
+  const asNumber = Number(value);
+  if (Number.isFinite(asNumber)) {
+    return asNumber;
+  }
+
+  return value as JwtExpiration;
 }
 
 export function loadConfig(): Config {
@@ -31,9 +48,9 @@ export function loadConfig(): Config {
     },
     jwt: {
       accessSecret: process.env.JWT_ACCESS_SECRET ?? '',
-      accessExpiresIn: process.env.JWT_ACCESS_EXPIRATION ?? '',
+      accessExpiresIn: parseJwtExpiration(process.env.JWT_ACCESS_EXPIRATION, '15m'),
       refreshSecret: process.env.JWT_REFRESH_SECRET ?? '',
-      refreshExpiresIn: process.env.JWT_REFRESH_EXPIRATION ?? '',
+      refreshExpiresIn: parseJwtExpiration(process.env.JWT_REFRESH_EXPIRATION, '7d'),
     },
   };
 }

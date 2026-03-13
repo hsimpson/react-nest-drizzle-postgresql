@@ -16,7 +16,7 @@ This is a full-stack application built with React, NestJS, Drizzle ORM, and Post
 
 Prerequisites:
 
-- Node.js (v22 or later)
+- Node.js (v24 or later)
 - Docker (for PostgreSQL)
 - Yarn (for package management)
 
