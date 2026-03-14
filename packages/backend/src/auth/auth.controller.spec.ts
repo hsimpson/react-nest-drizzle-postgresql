@@ -1,84 +1,92 @@
-import { HttpStatus } from '@nestjs/common';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { waitForTime } from 'src/_test/sleep';
-import { AppModule } from 'src/app.module';
-import request from 'supertest';
-import { beforeAll, describe, expect, it } from 'vitest';
+import { Request } from 'express';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { mock } from 'vitest-mock-extended';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 import { LoginResponseDto } from './dto/login.response.dto';
 
 describe('AuthController', () => {
-  let app: NestExpressApplication;
+  let authController: AuthController;
+  const mockAuthService = mock<AuthService>();
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      controllers: [AuthController],
+      providers: [{ provide: AuthService, useValue: mockAuthService }],
     }).compile();
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
+    authController = moduleFixture.get<AuthController>(AuthController);
   });
 
-  const doLogin = async (
-    nestApp: NestExpressApplication,
-    email: string,
-    password: string,
-  ): Promise<LoginResponseDto> => {
-    const response = await request(nestApp.getHttpServer())
-      .post('/auth/login')
-      .send({ email, password })
-      .expect(HttpStatus.CREATED);
-
-    return response.body as LoginResponseDto;
-  };
-
-  it('login', async () => {
-    const loginResponse = await doLogin(app, 'user@example.com', 'password');
-    expect(loginResponse).toBeDefined();
-    expect(loginResponse.accessToken).toBeDefined();
-    expect(loginResponse.refreshToken).toBeDefined();
+  afterEach(() => {
+    vi.resetAllMocks();
   });
 
-  it('login with wrong credentials', async () => {
-    await request(app.getHttpServer())
-      .post('/auth/login')
-      .send({ email: 'wrong@examle.com', password: 'wrong' })
-      .expect(HttpStatus.UNAUTHORIZED);
+  it('login_successful', async () => {
+    // given
+    const request = { user: { accountId: '1' } } as unknown as Request;
+    const expectedResponse = {
+      accessToken: 'access-token',
+      refreshToken: 'refresh-token',
+    };
+    mockAuthService.login.mockResolvedValue(expectedResponse);
+
+    // when
+    const response = await authController.login(request);
+
+    // then
+    expect(mockAuthService.login).toHaveBeenCalledWith('1');
+    expect(response).toBeInstanceOf(LoginResponseDto);
+    expect(response).toEqual(expectedResponse);
   });
 
-  it('refresh', async () => {
-    const loginResponse = await doLogin(app, 'user@example.com', 'password');
+  it('login_failedWithUnauthorizedException', async () => {
+    // given
+    const request = { user: { accountId: '1' } } as unknown as Request;
+    mockAuthService.login.mockResolvedValue(null);
 
-    await waitForTime(1000); // Wait for a second to ensure the tokens are different
-
-    const response = await request(app.getHttpServer())
-      .post('/auth/refresh')
-      .set('Authorization', `Bearer ${loginResponse.refreshToken}`)
-      .expect(HttpStatus.CREATED);
-
-    const refreshResponse = response.body as LoginResponseDto;
-    expect(refreshResponse).toBeDefined();
-    expect(refreshResponse.accessToken).toBeDefined();
-    expect(refreshResponse.refreshToken).toBeDefined();
-    expect(refreshResponse.accessToken).not.toEqual(loginResponse.accessToken);
-    expect(refreshResponse.refreshToken).not.toEqual(loginResponse.refreshToken);
+    // when & then
+    await expect(authController.login(request)).rejects.toThrow(UnauthorizedException);
   });
 
-  it('refresh with invalid token', async () => {
-    await doLogin(app, 'user@example.com', 'password');
+  it('refresh_successful', async () => {
+    // given
+    const request = { user: { sub: '1', email: 'user@example.com' } } as unknown as Request;
+    const expectedResponse = {
+      accessToken: 'new-access-token',
+      refreshToken: 'new-refresh-token',
+    };
+    mockAuthService.refreshToken.mockResolvedValue(expectedResponse);
 
-    await request(app.getHttpServer())
-      .post('/auth/refresh')
-      .set('Authorization', `Bearer wrong-token`)
-      .expect(HttpStatus.UNAUTHORIZED);
+    // when
+    const response = await authController.refresh(request);
+
+    // then
+    expect(mockAuthService.refreshToken).toHaveBeenCalledWith('1');
+    expect(response).toBeInstanceOf(LoginResponseDto);
+    expect(response).toEqual(expectedResponse);
   });
 
-  it('logout', async () => {
-    const loginResponse = await doLogin(app, 'user@example.com', 'password');
+  it('refresh_failedWithUnauthorizedException', async () => {
+    // given
+    const request = { user: { sub: '1', email: 'user@example.com' } } as unknown as Request;
+    mockAuthService.refreshToken.mockResolvedValue(null);
 
-    await request(app.getHttpServer())
-      .post('/auth/logout')
-      .set('Authorization', `Bearer ${loginResponse.accessToken}`)
-      .expect(HttpStatus.CREATED);
+    // when & then
+    await expect(authController.refresh(request)).rejects.toThrow(UnauthorizedException);
+  });
+
+  it('logout_successful', async () => {
+    // given
+    const request = { user: { sub: '1', email: 'user@example.com' } } as unknown as Request;
+    mockAuthService.logoutAll.mockResolvedValue();
+
+    // when
+    await authController.logout(request);
+
+    // then
+    expect(mockAuthService.logoutAll).toHaveBeenCalledWith('1');
   });
 });

@@ -15,8 +15,8 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalGuard)
   public async login(@Req() req: Request) {
-    const reqUser = req.user as ExpressRequestUser;
-    const responseUser = await this.authService.login(reqUser.accountId);
+    const user = req.user as ExpressRequestUser;
+    const responseUser = await this.authService.login(user.accountId);
     if (!responseUser) {
       throw new UnauthorizedException();
     }
