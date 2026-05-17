@@ -5,7 +5,10 @@ import { ConfigService } from '@nestjs/config';
 import { DatabaseConfig } from './config';
 
 @Injectable()
-export class DbConfigService implements ConfigurableModuleOptionsFactory<DrizzlePGConfig, 'create'> {
+export class DbConfigService implements ConfigurableModuleOptionsFactory<
+  DrizzlePGConfig,
+  'create'
+> {
   public constructor(private readonly configService: ConfigService) {}
 
   public create = (): DrizzlePGConfig => {

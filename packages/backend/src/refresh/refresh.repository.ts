@@ -13,12 +13,15 @@ export class RefreshRepository extends DrizzleRepository<typeof schema, typeof s
   }
 
   public async createSession(accountId: string, hashedRefreshToken: string): Promise<void> {
-    await this.db.insert(schema.refresh).values({ accountId, hashedRefreshToken }).onConflictDoUpdate({
-      target: schema.refresh.id,
-      set: {
-        hashedRefreshToken,
-      },
-    });
+    await this.db
+      .insert(schema.refresh)
+      .values({ accountId, hashedRefreshToken })
+      .onConflictDoUpdate({
+        target: schema.refresh.id,
+        set: {
+          hashedRefreshToken,
+        },
+      });
   }
 
   public async findSessions(accountId: string): Promise<Refresh[]> {

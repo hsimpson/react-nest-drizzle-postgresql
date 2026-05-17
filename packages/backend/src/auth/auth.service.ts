@@ -19,7 +19,10 @@ export class AuthService {
     this.jwtConfig = this.configService.get<JwtConfig>('jwt');
   }
 
-  public async validateAccount(email: string, password: string): Promise<ExpressRequestUser | null> {
+  public async validateAccount(
+    email: string,
+    password: string,
+  ): Promise<ExpressRequestUser | null> {
     const account = await this.accountService.getAccountByEmail(email);
 
     if (!account || !(await argon2.verify(account.password, password))) {
