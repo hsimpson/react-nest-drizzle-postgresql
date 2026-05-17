@@ -3326,10 +3326,10 @@ drizzle-orm@^0.45.2:
   resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-0.45.2.tgz#37eb5e4e6bd1309cb8d5414de09632d8f82d8a65"
   integrity sha512-kY0BSaTNYWnoDMVoyY8uxmyHjpJW1geOmBMdSSicKo9CIIWkSxMIj2rkeSR51b8KAPB7m+qysjuHme5nKP+E5Q==
 
-drizzle-seed@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/drizzle-seed/-/drizzle-seed-0.4.0.tgz#fe10a4c8600068003929d8be804c97a0d298e3ee"
-  integrity sha512-QyIcnX2B4eDuzFIYjQ4o+Zl6AMLMBQwNg13uVrh4EvUCL0oonymH9vmQWSYC8SQsCdw2GmsHcwoNuOGOiJkgvA==
+drizzle-seed@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/drizzle-seed/-/drizzle-seed-0.3.1.tgz#06866f05baf6470855d58ad7ff630435259552ba"
+  integrity sha512-F/0lgvfOAsqlYoHM/QAGut4xXIOXoE5VoAdv2FIl7DpGYVXlAzKuJO+IphkKUFK3Dz+rFlOsQLnMNrvoQ0cx7g==
   dependencies:
     pure-rand "^6.1.0"
 

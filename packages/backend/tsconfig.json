@@ -5,6 +5,7 @@
       "@/*": ["./src/*"],
       "@/db/*": ["./src/db/*"]
     },
+    "outDir": "./dist",
     "strictPropertyInitialization": false
   },
   "extends": "../../tsconfig.base.json"
