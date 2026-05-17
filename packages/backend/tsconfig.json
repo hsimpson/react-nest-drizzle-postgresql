@@ -1,12 +1,20 @@
 {
   "compilerOptions": {
+    "incremental": false,
+    "module": "commonjs",
+    "noImplicitAny": false,
     "noPropertyAccessFromIndexSignature": false,
+    "noUncheckedSideEffectImports": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"],
       "@/db/*": ["./src/db/*"]
     },
     "outDir": "./dist",
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "tsBuildInfoFile": "./dist/.tsbuildinfo"
   },
   "extends": "../../tsconfig.base.json"
 }
