@@ -1,10 +1,10 @@
+import { AccountService } from '@/account/account.service';
+import { JwtConfig } from '@/config/config';
 import * as schema from '@/db/schema';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { JwtConfig } from 'src/config/config';
-import { AccountService } from '../account/account.service';
 import { AuthJwtPayload, ExpressRequestUser, JwtTokens } from './types/types';
 
 @Injectable()

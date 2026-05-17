@@ -1,11 +1,11 @@
+import { AuthService } from '@/auth/auth.service';
+import { AuthJwtPayload } from '@/auth/types/types';
+import { JwtConfig } from '@/config/config';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { JwtConfig } from '../../config/config';
-import { AuthService } from '../auth.service';
-import { AuthJwtPayload } from '../types/types';
 
 const JWT_STRATEGY_NAME = 'refresh-jwt';
 

@@ -1,13 +1,13 @@
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 
+import { AccountService } from '@/account/account.service';
 import { Account } from '@/db/schema';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import * as argon2 from 'argon2';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mock } from 'vitest-mock-extended';
-import { AccountService } from '../account/account.service';
 
 describe('AuthService', async () => {
   let authService: AuthService;

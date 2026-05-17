@@ -1,6 +1,6 @@
+import { SearchAndSortFilter } from '@/_common/searchAndSortFilter';
 import * as schema from '@/db/schema';
 import { SQL, and, eq } from 'drizzle-orm';
-import { SearchAndSortFilter } from 'src/_common/searchAndSortFilter';
 
 export class RefreshFilter extends SearchAndSortFilter<typeof schema.refresh> {
   private _accountId?: string;

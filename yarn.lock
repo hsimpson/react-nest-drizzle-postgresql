@@ -4833,6 +4833,11 @@ jest-worker@^27.4.5:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
+jiti@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/jiti/-/jiti-2.7.0.tgz#974228f2f4ca2bc21885a1797b45fea68e950c64"
+  integrity sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==
+
 js-tokens@^10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-10.0.0.tgz#dffe7599b4a8bb7fe30aff8d0235234dffb79831"

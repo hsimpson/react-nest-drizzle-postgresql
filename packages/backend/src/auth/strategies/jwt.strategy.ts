@@ -1,9 +1,9 @@
+import { AuthJwtPayload } from '@/auth/types/types';
+import { JwtConfig } from '@/config/config';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { JwtConfig } from '../../config/config';
-import { AuthJwtPayload } from '../types/types';
 
 const JWT_STRATEGY_NAME = 'jwt';
 

@@ -1,6 +1,6 @@
+import * as schema from '@/db/schema';
 import * as argon2 from 'argon2';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import * as schema from '../schema';
 import accounts from './data/accounts.json';
 
 export default async function seed(db: NodePgDatabase) {

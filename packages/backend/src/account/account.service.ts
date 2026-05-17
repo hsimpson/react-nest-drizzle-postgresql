@@ -1,5 +1,5 @@
+import { RefreshRepository } from '@/refresh/refresh.repository';
 import { Injectable } from '@nestjs/common';
-import { RefreshRepository } from 'src/refresh/refresh.repository';
 import { AccountRepository } from './account.repository';
 
 @Injectable()

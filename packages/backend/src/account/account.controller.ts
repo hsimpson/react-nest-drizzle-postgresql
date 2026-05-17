@@ -1,8 +1,8 @@
+import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
+import { ExpressRequestUser } from '@/auth/types/types';
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Request } from 'express';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { ExpressRequestUser } from 'src/auth/types/types';
 import { AccountService } from './account.service';
 import { AccountResponseDto } from './dto/account.response.dto';
 
