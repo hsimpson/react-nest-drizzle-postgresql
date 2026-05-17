@@ -1,16 +1,17 @@
 import { defineConfig } from 'eslint/config';
-import sharedConfig from '../../shared/eslint.config.mjs';
+import sharedConfig from '../../eslint.config';
 
 export default defineConfig([
   ...sharedConfig,
 
   {
-    ignores: ['./coverage/**/*', './dist/**/*', './eslint.config.mjs', './prettier.config.mjs'],
+    ignores: ['./coverage/**/*', './dist/**/*'],
   },
 
   // typescript-eslint rules
   {
     rules: {
+      '@typescript-eslint/consistent-type-definitions': 'off',
       '@typescript-eslint/no-extraneous-class': 'off',
     },
   },

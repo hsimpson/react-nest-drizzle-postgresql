@@ -6,7 +6,7 @@ interface SearchAndSortFilterI {
 }
 
 export abstract class SearchAndSortFilter<T extends PgTable> implements SearchAndSortFilterI {
-  private _limit: number = 50;
+  private _limit = 50;
   private readonly _table: T;
 
   public constructor(table: T) {
